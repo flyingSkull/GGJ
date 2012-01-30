@@ -83,6 +83,8 @@ package states
 			setFrameCountByWeekDay(playStateServiceInst.currentWeekDay);
 			createPlayerByWeekDay(playStateServiceInst.currentWeekDay);
 		
+			createForeGround();
+			
 			createExit();
 			
 			createCamera();
@@ -93,19 +95,19 @@ package states
 			switch(weekDay)
 			{
 				case "MON":
-					laterInOffice(100);
+					laterInOffice(50);
 					break;
 				case "TUE":
-					laterInOffice(200);
+					laterInOffice(100);
 					break;
 				case "WED":
-					laterInOffice(300);
+					laterInOffice(150);
 					break;
 				case "THU":
-					laterInOffice(400);
+					laterInOffice(200);
 					break;
 				case "FRI":
-					laterInOffice(500);
+					laterInOffice(250);
 					break;
 					
 				default:
@@ -155,6 +157,14 @@ package states
 			bg.active = false;
 			bg.allowCollisions = 0;
 			add(bg);
+		}
+		
+		private function createForeGround():void
+		{
+			var fg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgFG);
+			fg.active = false;
+			fg.allowCollisions = 0;
+			add(fg);
 		}
 
 
@@ -330,7 +340,7 @@ package states
 		{
 			if(ghostPlayer1)
 			{
-				if(frameCount <playStateServiceInst.ghostPlayerDict["MON"].length && playStateServiceInst.ghostPlayerDict["MON"][frameCount])
+				if(playStateServiceInst.ghostPlayerDict["MON"] && frameCount <playStateServiceInst.ghostPlayerDict["MON"].length && playStateServiceInst.ghostPlayerDict["MON"][frameCount])
 				{
 					ghostPlayer1.x = playStateServiceInst.ghostPlayerDict["MON"][frameCount].x;
 					ghostPlayer1.y = playStateServiceInst.ghostPlayerDict["MON"][frameCount].y;
@@ -342,7 +352,7 @@ package states
 		
 			if(ghostPlayer2)
 			{
-				if(frameCount <playStateServiceInst.ghostPlayerDict["TUE"].length && playStateServiceInst.ghostPlayerDict["TUE"][frameCount])
+				if(playStateServiceInst.ghostPlayerDict["TUE"] && frameCount <playStateServiceInst.ghostPlayerDict["TUE"].length && playStateServiceInst.ghostPlayerDict["TUE"][frameCount])
 				{
 					ghostPlayer2.x = playStateServiceInst.ghostPlayerDict["TUE"][frameCount].x;
 					ghostPlayer2.y = playStateServiceInst.ghostPlayerDict["TUE"][frameCount].y;
@@ -355,7 +365,7 @@ package states
 		
 			if(ghostPlayer3)
 			{
-				if(frameCount <playStateServiceInst.ghostPlayerDict["WED"].length && playStateServiceInst.ghostPlayerDict["WED"][frameCount])
+				if(playStateServiceInst.ghostPlayerDict["WED"] && frameCount <playStateServiceInst.ghostPlayerDict["WED"].length && playStateServiceInst.ghostPlayerDict["WED"][frameCount])
 				{
 					ghostPlayer3.x = playStateServiceInst.ghostPlayerDict["WED"][frameCount].x;
 					ghostPlayer3.y = playStateServiceInst.ghostPlayerDict["WED"][frameCount].y;
@@ -367,7 +377,7 @@ package states
 		
 			if(ghostPlayer4)
 			{
-				if(frameCount <playStateServiceInst.ghostPlayerDict["THU"].length && playStateServiceInst.ghostPlayerDict["THU"][frameCount])
+				if(playStateServiceInst.ghostPlayerDict["THU"] && frameCount <playStateServiceInst.ghostPlayerDict["THU"].length && playStateServiceInst.ghostPlayerDict["THU"][frameCount])
 				{
 					ghostPlayer4.x = playStateServiceInst.ghostPlayerDict["THU"][frameCount].x;
 					ghostPlayer4.y = playStateServiceInst.ghostPlayerDict["THU"][frameCount].y;
@@ -386,8 +396,8 @@ package states
 			}
 			else
 			{
-				resetWeek();
 				FlxG.switchState(new GameOverState());
+				resetWeek();
 			}
 			
 			infoText.text = "HEALTH: "+player.health;

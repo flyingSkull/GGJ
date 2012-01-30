@@ -35,8 +35,8 @@ package {
 			addAnimation(ANIMATION_IDLE_BACKWARDS, [29,30,31,32,33], 5, true);
 			addAnimation(ANIMATION_RUN, [5,6,7,8,9,10,11,12,13,14,15,16], 15, true);
 			addAnimation(ANIMATION_RUN_BACKWARDS, [17,18,19,20,21,22,23,24,25,26,27,28], 15, true);
-			addAnimation(ANIMATION_JUMP, [5,6,7], 3, false);
-			addAnimation(ANIMATION_JUMP_BACKWARDS, [17,18,19], 3, false);
+			addAnimation(ANIMATION_JUMP, [6,7,8,8,8,8,8,8], 3, false);
+			addAnimation(ANIMATION_JUMP_BACKWARDS, [17,18,19,19,19,19,19,19], 3, false);
 		}
 		
 		protected function initSpeed():void{

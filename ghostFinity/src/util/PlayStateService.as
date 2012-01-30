@@ -19,6 +19,7 @@ package util {
 		[Embed(source="../assets/stuhlRechts.png")] public static var ImgColliderChairRight:Class;
 		[Embed(source="../assets/tasse.png")] public static var ImgColliderCup:Class;
 		[Embed(source="../assets/levelBG.png")] public static var ImgBG:Class;
+		[Embed(source="../assets/levelConfi.png")] public static var ImgFG:Class;
 		[Embed(source="../assets/playerSprite.png")] public static var ImgPlayer:Class;
 		[Embed(source="../assets/ghostSprite.png")] public static var GhostPlayer:Class;
 		[Embed(source="../assets/startScreen.png")] public static var ImgStartScreen:Class;
