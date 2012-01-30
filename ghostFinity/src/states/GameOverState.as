@@ -1,8 +1,9 @@
 package states {
-	import util.PlayStateService;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	
+	import util.ConstService;
 
 	public class GameOverState extends FlxState {
 		private var animationCount:uint = 0;
@@ -25,11 +26,10 @@ package states {
 				FlxG.switchState(new CreditsState());
 			}
 		}
-		
 				
 		private function createBackGround():void
 		{
-			var bg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgEndScreen);
+			var bg:FlxSprite = new FlxSprite(0,0, ConstService.ImgEndScreen);
 			bg.active = false;
 			add(bg);
 		}

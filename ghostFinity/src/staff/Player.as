@@ -1,8 +1,8 @@
-package {
-	import util.PlayStateService;
-
+package staff {
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
+	
+	import util.ConstService;
 
 	/**
 	 * @author stephan
@@ -27,7 +27,7 @@ package {
 		}
 		
 		protected function loadSpriteMap():void{
-			loadGraphic(PlayStateService.ImgPlayer, true, false, 17, 16);
+			loadGraphic(ConstService.ImgPlayer, true, false, 17, 16);
 		}
 		
 		protected function initAnimations():void{

@@ -1,6 +1,4 @@
 package states {
-	import flash.text.AntiAliasType;
-	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
@@ -9,6 +7,7 @@ package states {
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	
+	import util.ConstService;
 	import util.PlayStateService;
 
 	public class ElevatorState extends FlxState
@@ -89,7 +88,7 @@ package states {
 		
 		private function createBackGround():void
 		{
-			var bg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgElevatorBg);
+			var bg:FlxSprite = new FlxSprite(0,0, ConstService.ImgElevatorBg);
 			bg.active = false;
 			add(bg);
 		}
@@ -97,7 +96,7 @@ package states {
 		private function createBob():void
 		{
 			bob = new FlxSprite(9*8-6,8*8-4);
-			bob.loadGraphic(PlayStateService.ImgElevatorSpriteMap, true, false, 17, 17);
+			bob.loadGraphic(ConstService.ImgElevatorSpriteMap, true, false, 17, 17);
 			bob.addAnimation(ANIMATION_IDLE,[0,1,0,0,0,1,2,0,0],3,true);
 			bob.addAnimation(ANIMATION_CLOCK,[3,4,5,6,7,7,7,7,7,8,9],5,false);
 			bob.addAnimation(ANIMATION_BAG,[10,11,12,13,14,15,16,0],5,false);

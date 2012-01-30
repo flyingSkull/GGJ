@@ -19,6 +19,10 @@ package states
 	import org.flixel.FlxState;
 	import org.flixel.FlxTilemap;
 	
+	import staff.Ghost;
+	import staff.Player;
+	
+	import util.ConstService;
 	import util.PlayStateService;
 
 	/*.
@@ -37,11 +41,11 @@ package states
 		
 		private var level:FlxTilemap;
 		
-		private var realPlayer:FlxSprite;
-		private var ghostPlayer1:FlxSprite;
-		private var ghostPlayer2:FlxSprite;
-		private var ghostPlayer3:FlxSprite;
-		private var ghostPlayer4:FlxSprite;
+		private var bob:Player;
+		private var ghost1:Ghost;
+		private var ghost2:Ghost;
+		private var ghost3:Ghost;
+		private var ghost4:Ghost;
 		
 		private var exit:FlxSprite;
 		private var cam:FlxCamera;
@@ -60,9 +64,8 @@ package states
 		{
 			playStateServiceInst = PlayStateService.getInstance(); 
 			
-			if(reset){
+			if(reset)
 				startPlay();
-			}
 		}
 		
 		override public function create():void
@@ -111,49 +114,48 @@ package states
 					break;
 					
 				default:
-				{
 					laterInOffice(0);
 					break;
-				}
 			}
 		}
 
 		private function laterInOffice(inc:int):void
 		{
 			trace("Sorry, I'm "+inc+" to late ! ");
+			
 			for (var i:int = 0; i < inc; i++)
-				playStateServiceInst.ghostPlayerArray.push(new Point(-20, -20));
+				playStateServiceInst.ghostPlayerArray.push(new Point(-20, 50));
 		}
 
 		private function createAndAddColliders():void
 		{
-			var colliderComputerArray:Array 	= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_COMPUTER);
-			var colliderFlowerBigArray:Array 	= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_FLOWERS_BIG);
-			var colliderFlowerSmallArray:Array 	= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_FLOWERS_SMALL);
-			var colliderChairLeftArray:Array 	= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_CHAIR_LEFT);
-			var colliderChairRightArray:Array 	= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_CHAIR_RIGHT);
-			var colliderCupArray:Array 			= PlayStateService.getColliderPositionArray(PlayStateService.ASSET_ID_CUP);
+			var colliderComputerArray:Array 	= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_COMPUTER);
+			var colliderFlowerBigArray:Array 	= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_FLOWERS_BIG);
+			var colliderFlowerSmallArray:Array 	= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_FLOWERS_SMALL);
+			var colliderChairLeftArray:Array 	= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_CHAIR_LEFT);
+			var colliderChairRightArray:Array 	= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_CHAIR_RIGHT);
+			var colliderCupArray:Array 			= PlayStateService.getColliderPositionArray(ConstService.ASSET_ID_CUP);
 		
-			addColliders(colliderComputerArray, PlayStateService.ImgColliderComputer);
-			addColliders(colliderFlowerSmallArray, PlayStateService.ImgColliderFlowersSmall);
-			addColliders(colliderFlowerBigArray, PlayStateService.ImgColliderFlowersBig);
-			addColliders(colliderChairLeftArray, PlayStateService.ImgColliderChairLeft);
-			addColliders(colliderChairRightArray, PlayStateService.ImgColliderChairRight);
-			addColliders(colliderCupArray, PlayStateService.ImgColliderCup);
+			addColliders(colliderComputerArray, 	ConstService.ImgColliderComputer);
+			addColliders(colliderFlowerSmallArray, 	ConstService.ImgColliderFlowersSmall);
+			addColliders(colliderFlowerBigArray, 	ConstService.ImgColliderFlowersBig);
+			addColliders(colliderChairLeftArray, 	ConstService.ImgColliderChairLeft);
+			addColliders(colliderChairRightArray, 	ConstService.ImgColliderChairRight);
+			addColliders(colliderCupArray, 			ConstService.ImgColliderCup);
 		}
 
 
 		private function createLevel():void
 		{
 			level = new FlxTilemap();
-			level.loadMap(FlxTilemap.arrayToCSV(PlayStateService.LELVEL_MAP_0, 75), PlayStateService.ImgTiles, 0, 0, FlxTilemap.OFF, 1, 1, 1);
+			level.loadMap(FlxTilemap.arrayToCSV(PlayStateService.LELVEL_MAP_0, 75), ConstService.ImgTiles, 0, 0, FlxTilemap.OFF, 1, 1, 1);
 			add(level);
 		}
 
 
 		private function createBackGround():void
 		{
-			var bg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgBG);
+			var bg:FlxSprite = new FlxSprite(0,0, ConstService.ImgBG);
 			bg.active = false;
 			bg.allowCollisions = 0;
 			add(bg);
@@ -161,7 +163,7 @@ package states
 		
 		private function createForeGround():void
 		{
-			var fg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgFG);
+			var fg:FlxSprite = new FlxSprite(0,0, ConstService.ImgFG);
 			fg.active = false;
 			fg.allowCollisions = 0;
 			add(fg);
@@ -174,7 +176,7 @@ package states
 			for(var i:uint = 0; i < positionsArray.length; i ++)
 			{
 				spawn = positionsArray[i] as Point;
-				addCollider(spawn.x, spawn.y, image, PlayStateService.WEIGHT_MONITOR);
+				addCollider(spawn.x, spawn.y, image, ConstService.WEIGHT_MONITOR);
 			}
 		}
 		
@@ -195,57 +197,57 @@ package states
 			if(playStateServiceInst.currentWeekDay == "MON")
 			{
 				trace("#createPlayer::MO");
-				realPlayer = createPlayer(0xFFFF0000);
+				bob = createPlayer(0xFFFF0000);
 				
-				add(realPlayer);
+				add(bob);
 			}
 			else if(playStateServiceInst.currentWeekDay == "TUE")
 			{
 				trace("#createPlayer::DI");
-				realPlayer = createPlayer(0xFFFF0000);
-				ghostPlayer1 = createGhost(0xFF8CF1FF);
+				bob = createPlayer(0xFFFF0000);
+				ghost1 = createGhost(0xFF8CF1FF);
 				
-				add(realPlayer);
-				add(ghostPlayer1);
+				add(bob);
+				add(ghost1);
 			}
 			else if(playStateServiceInst.currentWeekDay == "WED")
 			{
 				trace("#createPlayer::MI");
-				realPlayer = createPlayer(0xFFFF0000);
-				ghostPlayer1 = createGhost(0xFF8CF1FF);
-				ghostPlayer2 = createGhost(0xFF8CF1FF);
+				bob = createPlayer(0xFFFF0000);
+				ghost1 = createGhost(0xFF8CF1FF);
+				ghost2 = createGhost(0xFF8CF1FF);
 				
-				add(realPlayer);
-				add(ghostPlayer1);
-				add(ghostPlayer2);
+				add(bob);
+				add(ghost1);
+				add(ghost2);
 			}
 			else if(playStateServiceInst.currentWeekDay == "THU")
 			{
 				trace("#createPlayer::DO");
-				realPlayer = createPlayer(0xFFFF0000);
-				ghostPlayer1 = createGhost(0xFF8CF1FF);
-				ghostPlayer2 = createGhost(0xFF8CF1FF);
-				ghostPlayer3 = createGhost(0xFF8CF1FF);
+				bob = createPlayer(0xFFFF0000);
+				ghost1 = createGhost(0xFF8CF1FF);
+				ghost2 = createGhost(0xFF8CF1FF);
+				ghost3 = createGhost(0xFF8CF1FF);
 				
-				add(realPlayer);
-				add(ghostPlayer1);
-				add(ghostPlayer2);
-				add(ghostPlayer3);
+				add(bob);
+				add(ghost1);
+				add(ghost2);
+				add(ghost3);
 			}
 			else if(playStateServiceInst.currentWeekDay == "FRI")
 			{
 				trace("#createPlayer::FR");
-				realPlayer = createPlayer(0xFFFF0000);
-				ghostPlayer1 = createGhost(0xFF8CF1FF);
-				ghostPlayer2 = createGhost(0xFF8CF1FF);
-				ghostPlayer3 = createGhost(0xFF8CF1FF);
-				ghostPlayer4 = createGhost(0xFF8CF1FF);
+				bob = createPlayer(0xFFFF0000);
+				ghost1 = createGhost(0xFF8CF1FF);
+				ghost2 = createGhost(0xFF8CF1FF);
+				ghost3 = createGhost(0xFF8CF1FF);
+				ghost4 = createGhost(0xFF8CF1FF);
 				
-				add(realPlayer);
-				add(ghostPlayer1);
-				add(ghostPlayer2);
-				add(ghostPlayer3);
-				add(ghostPlayer4);
+				add(bob);
+				add(ghost1);
+				add(ghost2);
+				add(ghost3);
+				add(ghost4);
 			}
 		}
 		
@@ -265,7 +267,7 @@ package states
 		private function createCamera():void
 		{
 			cam = new FlxCamera(0, 0, FlxG.width/4, FlxG.height/4);
-			cam.follow(realPlayer);
+			cam.follow(bob);
 			cam.setBounds(0, 0, level.width, level.height, false);
 			cam.color = 0xFFFFFF; 
 			
@@ -314,7 +316,7 @@ package states
 			
 			updateGhost();
 			
-			FlxG.overlap(exit, realPlayer, onExit);
+			FlxG.overlap(exit, bob, onExit);
 			
 			if(FlxG.keys.justPressed("R"))
 			{
@@ -327,10 +329,10 @@ package states
 
 		private function updatePlayer():void
 		{
-			if(realPlayer)
+			if(bob)
 			{
-				playerControl(realPlayer);
-				var point:Point = new Point(realPlayer.x, realPlayer.y);
+				playerControl(bob);
+				var point:Point = new Point(bob.x, bob.y);
 		
 				playStateServiceInst.ghostPlayerArray.push(point); 
 			}
@@ -338,55 +340,31 @@ package states
 
 		private function updateGhost():void
 		{
-			if(ghostPlayer1)
-			{
-				if(playStateServiceInst.ghostPlayerDict["MON"] && frameCount <playStateServiceInst.ghostPlayerDict["MON"].length && playStateServiceInst.ghostPlayerDict["MON"][frameCount])
-				{
-					ghostPlayer1.x = playStateServiceInst.ghostPlayerDict["MON"][frameCount].x;
-					ghostPlayer1.y = playStateServiceInst.ghostPlayerDict["MON"][frameCount].y;
-				}
+			if(ghost1)
+				setGhostPositionByDay("MON", ghost1);
 		
-				FlxG.overlap(exit, ghostPlayer1, dieNow);
-				FlxG.overlap(realPlayer, ghostPlayer1, overlapPlayer);
-			}
+			if(ghost2)
+				setGhostPositionByDay("TUE", ghost2);
 		
-			if(ghostPlayer2)
-			{
-				if(playStateServiceInst.ghostPlayerDict["TUE"] && frameCount <playStateServiceInst.ghostPlayerDict["TUE"].length && playStateServiceInst.ghostPlayerDict["TUE"][frameCount])
-				{
-					ghostPlayer2.x = playStateServiceInst.ghostPlayerDict["TUE"][frameCount].x;
-					ghostPlayer2.y = playStateServiceInst.ghostPlayerDict["TUE"][frameCount].y;
-				}
+			if(ghost3)
+				setGhostPositionByDay("WED", ghost3);
 		
-				
-				FlxG.overlap(exit, ghostPlayer2, dieNow);
-				FlxG.overlap(realPlayer, ghostPlayer2, overlapPlayer);
-			}
-		
-			if(ghostPlayer3)
-			{
-				if(playStateServiceInst.ghostPlayerDict["WED"] && frameCount <playStateServiceInst.ghostPlayerDict["WED"].length && playStateServiceInst.ghostPlayerDict["WED"][frameCount])
-				{
-					ghostPlayer3.x = playStateServiceInst.ghostPlayerDict["WED"][frameCount].x;
-					ghostPlayer3.y = playStateServiceInst.ghostPlayerDict["WED"][frameCount].y;
-				}
-				
-				FlxG.overlap(exit, ghostPlayer3, dieNow);
-				FlxG.overlap(realPlayer, ghostPlayer3, overlapPlayer);
-			}
-		
-			if(ghostPlayer4)
-			{
-				if(playStateServiceInst.ghostPlayerDict["THU"] && frameCount <playStateServiceInst.ghostPlayerDict["THU"].length && playStateServiceInst.ghostPlayerDict["THU"][frameCount])
-				{
-					ghostPlayer4.x = playStateServiceInst.ghostPlayerDict["THU"][frameCount].x;
-					ghostPlayer4.y = playStateServiceInst.ghostPlayerDict["THU"][frameCount].y;
-				}
-				
-				FlxG.overlap(exit, ghostPlayer4, dieNow);
-				FlxG.overlap(realPlayer, ghostPlayer4, overlapPlayer);
-			}
+			if(ghost4)
+				setGhostPositionByDay("THU", ghost4);
 		}
+
+		private function setGhostPositionByDay(day:String, ghost:Ghost):void
+		{
+			if(playStateServiceInst.ghostPlayerDict[day] && frameCount <playStateServiceInst.ghostPlayerDict[day].length && playStateServiceInst.ghostPlayerDict[day][frameCount])
+			{
+				ghost1.x = playStateServiceInst.ghostPlayerDict[day][frameCount].x;
+				ghost1.y = playStateServiceInst.ghostPlayerDict[day][frameCount].y;
+			}
+		
+			FlxG.overlap(exit, ghost, dieNow);
+			FlxG.overlap(bob, ghost, overlapPlayer);
+		}
+
 
 		private function overlapPlayer(player:FlxSprite, ghost:FlxSprite):void
 		{
@@ -438,7 +416,7 @@ package states
 			if(FlxG.keys.RIGHT)
 				player.acceleration.x = player.maxVelocity.x*4;
 		
-			if(FlxG.keys.justPressed("UP") && realPlayer.isTouching(FlxObject.FLOOR))
+			if(FlxG.keys.justPressed("UP") && bob.isTouching(FlxObject.FLOOR))
 				player.velocity.y -= player.maxVelocity.y/1.5;
 			
 		}
@@ -458,9 +436,9 @@ package states
 			playStateServiceInst.ghostPlayerArray = [];
 			playStateServiceInst.ghostPlayerDict[playStateServiceInst.currentWeekDay] = arr; 
 			
-			var weekDayIndex:int = PlayStateService.WEEK_DAYS.indexOf(playStateServiceInst.currentWeekDay);
-			weekDayIndex = (weekDayIndex+1)%PlayStateService.WEEK_DAYS.length;
-			playStateServiceInst.currentWeekDay = PlayStateService.WEEK_DAYS[weekDayIndex];
+			var weekDayIndex:int = ConstService.WEEK_DAYS.indexOf(playStateServiceInst.currentWeekDay);
+			weekDayIndex = (weekDayIndex+1)%ConstService.WEEK_DAYS.length;
+			playStateServiceInst.currentWeekDay = ConstService.WEEK_DAYS[weekDayIndex];
 			
 			resetGarbageCollection();
 		}

@@ -3,6 +3,7 @@ package states {
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	
+	import util.ConstService;
 	import util.PlayStateService;
 
 	public class WeekendState extends FlxState
@@ -48,7 +49,7 @@ package states {
 		
 		private function createBackGround():void
 		{
-			var bg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgElevatorBg);
+			var bg:FlxSprite = new FlxSprite(0,0, ConstService.ImgElevatorBg);
 			bg.active = false;
 			add(bg);
 			trace("WWWWW")
@@ -57,7 +58,7 @@ package states {
 		private function createBob():void
 		{
 			bob = new FlxSprite(9*8-6,8*8-4);
-			bob.loadGraphic(PlayStateService.ImgWeekendSpriteMap, true, false, 17, 17);
+			bob.loadGraphic(ConstService.ImgWeekendSpriteMap, true, false, 17, 17);
 			bob.addAnimation(ANIMATION_IDLE,[0,1,2,3,4,5,6,7,8,9],5,true);
 			bob.play(ANIMATION_IDLE);
 			

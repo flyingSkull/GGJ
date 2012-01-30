@@ -1,7 +1,9 @@
-package {
+package staff {
+	import org.flixel.FlxObject;
+	
+	import util.ConstService;
 	import util.PlayStateService;
 
-	import org.flixel.FlxObject;
 	/**
 	 * @author stephan
 	 */
@@ -12,8 +14,9 @@ package {
 			super(X, Y, SimpleGraphic);
 		}
 		
-		override protected function loadSpriteMap():void{
-			loadGraphic(PlayStateService.GhostPlayer, true, false, 20, 20);
+		override protected function loadSpriteMap():void
+		{
+			loadGraphic(ConstService.GhostPlayer, true, false, 20, 20);
 		}
 		
 		override protected function initAnimations():void{

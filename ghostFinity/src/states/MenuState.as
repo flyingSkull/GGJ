@@ -1,8 +1,9 @@
 package states {
-	import util.PlayStateService;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	
+	import util.ConstService;
 	
 	public class MenuState extends FlxState
 	{
@@ -28,7 +29,7 @@ package states {
 				
 		private function createBackGround():void
 		{
-			var bg:FlxSprite = new FlxSprite(0,0, PlayStateService.ImgStartScreen);
+			var bg:FlxSprite = new FlxSprite(0,0, ConstService.ImgStartScreen);
 			bg.active = false;
 			add(bg);
 		}
